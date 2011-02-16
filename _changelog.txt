@@ -1,4 +1,12 @@
 
+0.1.3.5
+-------
+
+- Revised and simplified chat settings manipulation
+- Fixed important issue with converting between numbers <-> strings and numbers scale
+- Fixed Keep alive procedure to keep user marked as Online
+- Slightly modified processing loop of feeds to do its job more accurately
+
 0.1.3.4
 -------
 
