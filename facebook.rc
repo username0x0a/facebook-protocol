@@ -1,0 +1,290 @@
+// Microsoft Visual C++ generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+#include "constants.h"
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// English (U.S.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "#include ""constants.h""\0"
+END
+
+3 TEXTINCLUDE 
+BEGIN
+    "\r\n"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDI_FACEBOOK            ICON                    "icons/facebook.ico"
+IDI_MIND                ICON                    "icons/mind.ico"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_FACEBOOKACCOUNT DIALOGEX 0, 0, 186, 134
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD
+EXSTYLE WS_EX_CONTROLPARENT
+FONT 8, "MS Shell Dlg", 0, 0, 0x0
+BEGIN
+    LTEXT           "E-mail:",IDC_STATIC,0,0,53,12
+    EDITTEXT        IDC_UN,54,0,131,12,ES_AUTOHSCROLL
+    LTEXT           "Password:",IDC_STATIC,0,16,53,12
+    EDITTEXT        IDC_PW,54,16,131,12,ES_PASSWORD | ES_AUTOHSCROLL
+    CONTROL         "Create a new Facebook account",IDC_NEWACCOUNTLINK,
+                    "Hyperlink",WS_TABSTOP,0,40,174,12
+END
+
+IDD_MIND DIALOGEX 0, 0, 267, 62
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | DS_CENTER | WS_POPUP | WS_CAPTION | WS_SYSMENU
+EXSTYLE WS_EX_TOPMOST
+CAPTION "What's on your mind?"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    EDITTEXT        IDC_MINDMSG,4,4,259,36,ES_MULTILINE | ES_AUTOVSCROLL | ES_WANTRETURN | WS_VSCROLL
+    LTEXT           "",IDC_CHARACTERS,4,48,19,10
+    DEFPUSHBUTTON   "Share",IDOK,213,44,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,159,44,50,14
+END
+
+IDD_OPTIONS DIALOGEX 0, 0, 305, 227
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD
+EXSTYLE WS_EX_CONTROLPARENT
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    GROUPBOX        "User Details",IDC_STATIC,51,7,204,70
+    LTEXT           "E-mail:",IDC_STATIC,59,23,44,8
+    EDITTEXT        IDC_UN,106,21,142,13,ES_AUTOHSCROLL
+    LTEXT           "Password:",IDC_STATIC,59,41,44,8
+    EDITTEXT        IDC_PW,106,39,142,13,ES_PASSWORD | ES_AUTOHSCROLL
+    CONTROL         "Create a new Facebook account",IDC_NEWACCOUNTLINK,
+                    "Hyperlink",WS_TABSTOP,106,57,142,12
+    GROUPBOX        "Advanced Settings",IDC_STATIC,51,79,204,141,WS_DISABLED
+    LTEXT           "Default group for newly added contacts:",IDC_STATIC,59,95,189,8
+    EDITTEXT        IDC_GROUP,106,106,142,13,ES_AUTOHSCROLL
+    LTEXT           "User-Agent:",IDC_STATIC,59,128,44,8
+    COMBOBOX        IDC_AGENT,106,126,142,59,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    CONTROL         "Force secure (HTTPS) connection",IDC_SECURE,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,59,147,189,10
+    CONTROL         "Automatically close chat windows on website",IDC_CLOSE_WINDOWS,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,59,159,189,10
+    CONTROL         "Post Miranda statuses to Wall",IDC_SET_STATUS,"Button",BS_AUTOCHECKBOX | BS_TOP | WS_TABSTOP,59,170,189,10
+    CONTROL         "Enable logging for debugging purposes",IDC_LOGGING,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,59,182,189,10
+    PUSHBUTTON      "Show cookies",IDC_COOKIES,87,198,131,14
+END
+
+IDD_OPTIONS_EVENTS DIALOGEX 0, 0, 305, 217
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD
+EXSTYLE WS_EX_CONTROLPARENT
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    GROUPBOX        "Event notifications",IDC_STATIC,6,7,293,115
+    CTEXT           "Colors",IDC_STATIC,106,14,68,8
+    RTEXT           "Back",IDC_STATIC,106,24,31,8
+    LTEXT           "Text",IDC_STATIC,143,24,31,8
+    CONTROL         "Notifications",IDC_NOTIFICATIONS_ENABLE,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,22,37,84,8
+    CONTROL         "",IDC_COLBACK,"ColourPicker",WS_TABSTOP,113,35,24,13
+    CONTROL         "",IDC_COLTEXT,"ColourPicker",WS_TABSTOP,143,35,24,13
+    CONTROL         "Default",IDC_NOTIFICATIONS_DEFAULT,"Button",BS_AUTOCHECKBOX | BS_NOTIFY | WS_TABSTOP,174,37,63,8
+    CONTROL         "News feeds",IDC_FEEDS_ENABLE,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,22,57,84,8
+    CONTROL         "",IDC_COLBACK2,"ColourPicker",WS_TABSTOP,113,55,24,13
+    CONTROL         "",IDC_COLTEXT2,"ColourPicker",WS_TABSTOP,143,55,24,13
+    CONTROL         "Default",IDC_FEEDS_DEFAULT,"Button",BS_AUTOCHECKBOX | BS_NOTIFY | WS_TABSTOP,174,57,63,8
+    CONTROL         "Other events",IDC_OTHER_ENABLE,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,22,77,84,8
+    CONTROL         "",IDC_COLBACK3,"ColourPicker",WS_TABSTOP,113,75,24,13
+    CONTROL         "",IDC_COLTEXT3,"ColourPicker",WS_TABSTOP,143,75,24,13
+    CONTROL         "Default",IDC_OTHER_DEFAULT,"Button",BS_AUTOCHECKBOX | BS_NOTIFY | WS_TABSTOP,174,77,63,8
+    CONTROL         "Client notifications",IDC_CLIENT_ENABLE,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,22,97,84,8
+    CONTROL         "",IDC_COLBACK4,"ColourPicker",WS_TABSTOP,113,95,24,13
+    CONTROL         "",IDC_COLTEXT4,"ColourPicker",WS_TABSTOP,143,95,24,13
+    CONTROL         "Default",IDC_CLIENT_DEFAULT,"Button",BS_AUTOCHECKBOX | BS_NOTIFY | WS_TABSTOP,174,97,63,8
+    RTEXT           "Timeout (sec.)",IDC_STATIC,174,14,113,8
+    RTEXT           "(0 = default, -1 = infinite)",IDC_STATIC,174,24,113,8
+    EDITTEXT        IDC_TIMEOUT,243,35,34,14,ES_AUTOHSCROLL
+    CONTROL         "",IDC_TIMEOUT_SPIN,"msctls_updown32",UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS,266,35,11,14
+    EDITTEXT        IDC_TIMEOUT2,243,55,34,14,ES_AUTOHSCROLL
+    CONTROL         "",IDC_TIMEOUT_SPIN2,"msctls_updown32",UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS,266,55,11,14
+    EDITTEXT        IDC_TIMEOUT3,243,75,34,14,ES_AUTOHSCROLL
+    CONTROL         "",IDC_TIMEOUT_SPIN3,"msctls_updown32",UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS,266,75,11,14
+    EDITTEXT        IDC_TIMEOUT4,243,95,34,14,ES_AUTOHSCROLL
+    CONTROL         "",IDC_TIMEOUT_SPIN4,"msctls_updown32",UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS,266,95,11,14
+    CONTROL         "Use balloon notifications in system tray instead of popups",IDC_SYSTRAY_NOTIFY,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,22,130,265,8
+    PUSHBUTTON      "Preview",IDC_PREVIEW,118,148,68,14
+END
+
+IDD_INFO DIALOGEX 0, 0, 325, 197
+STYLE DS_SYSMODAL | DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | DS_CENTER | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Info Dialog"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    EDITTEXT        IDC_DEBUGINFO,5,5,315,167,ES_MULTILINE | ES_AUTOVSCROLL | ES_NOHIDESEL | ES_READONLY | ES_WANTRETURN | WS_VSCROLL
+    LTEXT           "",IDC_CHARACTERS,5,182,19,10
+    DEFPUSHBUTTON   "Close",IDCLOSE,263,177,57,15
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO 
+BEGIN
+    IDD_MIND, DIALOG
+    BEGIN
+        LEFTMARGIN, 4
+        RIGHTMARGIN, 263
+        VERTGUIDE, 209
+        VERTGUIDE, 213
+        TOPMARGIN, 4
+        BOTTOMMARGIN, 58
+        HORZGUIDE, 40
+        HORZGUIDE, 44
+    END
+
+    IDD_OPTIONS, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 298
+        VERTGUIDE, 51
+        VERTGUIDE, 59
+        VERTGUIDE, 103
+        VERTGUIDE, 106
+        VERTGUIDE, 248
+        VERTGUIDE, 255
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 220
+    END
+
+    IDD_OPTIONS_EVENTS, DIALOG
+    BEGIN
+        LEFTMARGIN, 6
+        RIGHTMARGIN, 299
+        VERTGUIDE, 22
+        VERTGUIDE, 106
+        VERTGUIDE, 113
+        VERTGUIDE, 137
+        VERTGUIDE, 143
+        VERTGUIDE, 167
+        VERTGUIDE, 174
+        VERTGUIDE, 237
+        VERTGUIDE, 277
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 210
+        HORZGUIDE, 35
+        HORZGUIDE, 37
+        HORZGUIDE, 55
+        HORZGUIDE, 57
+        HORZGUIDE, 75
+        HORZGUIDE, 77
+        HORZGUIDE, 95
+        HORZGUIDE, 97
+    END
+
+    IDD_INFO, DIALOG
+    BEGIN
+        LEFTMARGIN, 5
+        RIGHTMARGIN, 320
+        VERTGUIDE, 263
+        TOPMARGIN, 5
+        BOTTOMMARGIN, 192
+        HORZGUIDE, 172
+        HORZGUIDE, 177
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION __VERSION_VS_FILE
+ PRODUCTVERSION __VERSION_VS_PROD
+ FILEFLAGSMASK 0x17L
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x4L
+ FILETYPE 0x2L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904b0"
+        BEGIN
+            VALUE "FileDescription", "Facebook protocol plugin for Miranda IM"
+            VALUE "FileVersion", __VERSION_VS_FILE_STRING
+            VALUE "InternalName", "Facebook"
+            VALUE "LegalCopyright", "Copyright © 2009-2011 Michal Zelinka"
+            VALUE "OriginalFilename", "facebook.dll"
+            VALUE "ProductName", "Facebook Protocol"
+            VALUE "ProductVersion", __VERSION_VS_FILE_STRING
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1200
+    END
+END
+
+#endif    // English (U.S.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

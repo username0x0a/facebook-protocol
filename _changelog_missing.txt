@@ -1,0 +1,38 @@
+Změny které jsi nezmínil, některé jsou informačně důležité :P
+ ! Oprava zobrazování bublinového oznámení - opravit pri missing Popup pluginu
+// Oprava odhlašovací procedury (nekompletní)
+ x Zrušeno načítání stavových zpráv
+ * Změna načítání avatarů z hovercardu místo mobilního facebooku
+ + Kontrola úspěšného odeslání zprávy
+ + Oznamování nově přijatých "soukromých" (ne chatových) zpráv - opravit
+ ! Opravena změna nečinnosti kontaktů
+ ! Oprava výpisu času v logu
+ ! Nenastavování "Vlastního jména" kontaktů
+ ! Oprava html tagů ve feedech
+ ! Oprava při vynuceném přepojení.
+ ! Nerozbrazování odpojení kontaktů při vlastním odpojení
+ * Po přihlášení se nezobrazují staré novinky ze zdi (pro staré chování vytvořit BYTE klíč OldFeedsTimestamp s hodnotou 1)
+ ! Oprava pro prázdné novinky na zdi
+ 
+ 
+TODO co by se hodilo hned do nové verze:
+ - Ořezávat výčet prvků ve feedech
+ - Při načtení nového vlastního avatara informovat mirandu o změně
+// Opravit odhlašovací proceduru aby fungovala tak jak má - takhle visí mirandí připojení v nastavení fb
+ - Opravit správu nečinnosti - resp. keep alive, takhle padá fb do nečinnosti ikdyž nemá
+ - Opravit správu nečinnosti - vlastní zjišťování změn nečinnosti - nevím proč to miranda neohlásí v onidlechange
+// Použít výchozí skupinu pro přidání kontaktů do kontaktlistu
+ 
+TODO co by se hodilo případně později:
+-- Možná přidat away stav + řešit automatickou nečinnosti skrz ten stav
+-- Opravy pro x64 verzi a kompilace
+-- Volba typu příspěvků, které se budou oznamovat
+-- Zjistit a opravit množení threadů -> duplicitních zpráv, atd
+ 
+TODO vzdálené/možné:
+--- Zeď a statusy někam ukládat - možná vypisovat do groupchatu apod.
+--- Synchronizace seznamu přátel: Automatické mazání smazaných a přidání nepřidaných
+--- Načítání více informací o kontaktech - pohlaví, narozeniny, tel.
+--- Autorizace požadavků přátel přímo v kontaktlistu
+--- Vyhledávání a přidávání přátel přímo v mirandě
+--- Posílání a přijímání privátních zpráv kontaktů
