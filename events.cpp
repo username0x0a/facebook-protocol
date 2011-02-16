@@ -29,7 +29,11 @@ Last change on : $Date: 2011-01-08 11:10:34 +0100 (Sat, 08 Jan 2011) $
 
 int FacebookProto::Test( WPARAM wparam, LPARAM lparam )
 {
-	facy.feeds( );
+//	facy.home();
+	facy.keep_alive();
+//	facy.chat_settings( FACEBOOK_CHAT_VISIBILITY );
+//	facy.reconnect();
+//	facy.buddy_list();
 	return FALSE;
 }
 

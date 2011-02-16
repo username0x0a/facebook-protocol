@@ -126,6 +126,7 @@ public:
 
 	bool    home( );
 	bool    reconnect( );
+	bool    chat_settings( BYTE flag, void* input = NULL );
 	bool    keep_alive( );
 
 	////////////////////////////////////////////////////////////
@@ -144,7 +145,7 @@ public:
 
 	bool    channel( );
 	bool    send_message( std::string message_recipient, std::string message_text );
-	bool    close_chat( std::string message_recipient );
+	bool    close_chat( std::string contact_id );
 
 	////////////////////////////////////////////////////////////
 

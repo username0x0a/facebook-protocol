@@ -175,7 +175,7 @@ int facebook_client::choose_method( int request_type )
 	case FACEBOOK_REQUEST_BUDDY_LIST:
 	case FACEBOOK_REQUEST_STATUS_SET:
 	case FACEBOOK_REQUEST_MESSAGE_SEND:
-	case FACEBOOK_REQUEST_SETTINGS:
+	case FACEBOOK_REQUEST_CHAT_SETTINGS:
 	case FACEBOOK_REQUEST_TYPING_SEND:
 	case FACEBOOK_REQUEST_LOGOUT:
 		return REQUEST_POST;
@@ -323,10 +323,10 @@ std::string facebook_client::choose_action( int request_type, std::string* data 
 		utils::text::replace_first( &action, "%s", utils::time::unix_timestamp() );
 		utils::text::replace_first( &action, "%s", first_time );
 		utils::text::replace_first( &action, "%s", self_.user_id );
-		utils::text::replace_first( &action, "%d", utils::conversion::to_string( (void*)&chat_sequence_num_, UTILS_CONV_UNSIGNED_NUMBER ) );
+		utils::text::replace_first( &action, "%d", utils::conversion::to_string( (void*)&chat_sequence_num_, UTILS_CONV_UNSIGNED | UTILS_CONV_INTEGER ) );
 		return action; }
 
-	case FACEBOOK_REQUEST_SETTINGS:
+	case FACEBOOK_REQUEST_CHAT_SETTINGS:
 		return "/ajax/chat/settings.php?__a=1";
 
 	case FACEBOOK_REQUEST_TYPING_SEND:
@@ -358,7 +358,7 @@ NETLIBHTTPHEADER* facebook_client::get_request_headers( int request_type, int* h
 	case FACEBOOK_REQUEST_PROFILE_GET:
 	case FACEBOOK_REQUEST_STATUS_SET:
 	case FACEBOOK_REQUEST_MESSAGE_SEND:
-	case FACEBOOK_REQUEST_SETTINGS:
+	case FACEBOOK_REQUEST_CHAT_SETTINGS:
 	case FACEBOOK_REQUEST_TYPING_SEND:
 		*headers_count = 7;
 		break;
@@ -386,7 +386,7 @@ NETLIBHTTPHEADER* facebook_client::get_request_headers( int request_type, int* h
 	case FACEBOOK_REQUEST_PROFILE_GET:
 	case FACEBOOK_REQUEST_STATUS_SET:
 	case FACEBOOK_REQUEST_MESSAGE_SEND:
-	case FACEBOOK_REQUEST_SETTINGS:
+	case FACEBOOK_REQUEST_CHAT_SETTINGS:
 	case FACEBOOK_REQUEST_TYPING_SEND:
 		set_header( &headers[6], "Content-Type" );
 	case FACEBOOK_REQUEST_HOME:
@@ -526,7 +526,7 @@ bool facebook_client::login(const std::string &username,const std::string &passw
 	password_ = password;
 
 	// Access homepage to get initial cookies
-	flap( FACEBOOK_REQUEST_HOME, NULL );
+	flap( FACEBOOK_REQUEST_HOME );
 
 	// Prepare login data
 	std::string data = "charset_test=%e2%82%ac%2c%c2%b4%2c%e2%82%ac%2c%c2%b4%2c%e6%b0%b4%2c%d0%94%2c%d0%84&locale=en&email=";
@@ -633,6 +633,8 @@ bool facebook_client::keep_alive( )
 
 	handle_entry( "keep_alive" );
 
+	// Keep us connected
+
 	std::string data = "user=" + this->self_.user_id + "&popped_out=false&force_render=true&buddy_list=1&notifications=0&post_form_id=" + this->post_form_id_ + "&fb_dtsg=" + this->dtsg_ + "&post_form_id_source=AsyncRequest&__a=1&nctr[n]=1";
 
 	{
@@ -645,6 +647,10 @@ bool facebook_client::keep_alive( )
 			data += ( i->data->is_idle ) ? "1" : "0"; } }
 
 	http::response resp = flap( FACEBOOK_REQUEST_KEEP_ALIVE, &data );
+
+	// Keep us marked as Online
+	// TODO: Online/Away application can be toggled here
+	home();
 
 	// Process result
 	validate_response(&resp);
@@ -686,10 +692,6 @@ bool facebook_client::home( )
 			// Get post_form_id
 			this->post_form_id_ = utils::text::source_get_value( &resp.data, 2, "post_form_id:\"", "\"" );
 			parent->Log("      Got self post form id: %s", this->post_form_id_.c_str());
-
-			// If something would go wrong:
-//			this->post_form_id_ = resp.data.substr( resp.data.find( "post_form_id:" ) + 14, 48 );
-//			this->post_form_id_ = this->post_form_id_.substr( 0, this->post_form_id_.find( "\"" ) );
 
 			// Get dtsg
 			this->dtsg_ = utils::text::source_get_value( &resp.data, 2, ",fb_dtsg:\"", "\"" );
@@ -747,22 +749,51 @@ bool facebook_client::home( )
 	}
 }
 
-bool facebook_client::reconnect( )
+bool facebook_client::chat_settings( BYTE flag, void* input )
 {
-	handle_entry( "reconnect" );
+	handle_entry( "chat_settings" );
 
-	// Set online "status" for chat - also turns on manually logged-out chat
-	std::string data = "visibility=true";
-	data += "&window_id=0";
+	std::string data = "window_id=0";
 	data += "&post_form_id=";
 	data += ( post_form_id_.length( ) ) ? post_form_id_ : "0";
 	data += "&post_form_id_source=AsyncRequest";
 	data += "&fb_dtsg=" + this->dtsg_;
-	data += "&lsd=";
-	http::response resp = flap( FACEBOOK_REQUEST_SETTINGS, &data );
+
+	if ( FLAG_CONTAINS( flag, FACEBOOK_CHAT_VISIBILITY ) )
+		// Set online "status" for chat
+		// - also turns on manually logged-out chat
+		// TODO: Chat online/offline state can be toggled here
+		data += "&visibility=true&lsd=";
+
+	if ( FLAG_CONTAINS( flag, FACEBOOK_CHAT_CLOSE_WINDOW ) ) {
+		// Close contact's window when requested
+		std::string* contact_id = ( std::string* )input;
+		data += "&close_chat=";
+		data += *contact_id; }
+
+	http::response resp = flap( FACEBOOK_REQUEST_CHAT_SETTINGS, &data );
+
+	switch ( resp.code )
+	{
+
+	case HTTP_CODE_OK:
+		return handle_success( "chat_settings" );
+
+	default:
+		return handle_error( "chat_settings" );
+
+	}
+}
+
+bool facebook_client::reconnect( )
+{
+	handle_entry( "reconnect" );
+
+	// Update chat settings
+	chat_settings( FACEBOOK_CHAT_VISIBILITY );
 
 	// Request reconnect
-	resp = flap( FACEBOOK_REQUEST_RECONNECT );
+	http::response resp = flap( FACEBOOK_REQUEST_RECONNECT );
 
 	// Process result data
 	validate_response(&resp);
@@ -966,19 +997,9 @@ bool facebook_client::send_message( std::string message_recipient, std::string m
 	}
 }
 
-bool facebook_client::close_chat( std::string message_recipient )
+bool facebook_client::close_chat( std::string contact_id )
 {
-	std::string data = "close_chat=";
-	data += message_recipient;
-	data += "&window_id=0";
-	data += "&post_form_id=";
-	data += ( post_form_id_.length( ) ) ? post_form_id_ : "0";
-	data += "&post_form_id_source=AsyncRequest";
-	data += "&fb_dtsg=" + this->dtsg_;
-	
-	http::response resp = flap( FACEBOOK_REQUEST_SETTINGS, &data );
-
-	return true;
+	return chat_settings( FACEBOOK_CHAT_CLOSE_WINDOW, &contact_id );
 }
 
 bool facebook_client::get_profile(facebook_user* fbu)

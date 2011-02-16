@@ -289,13 +289,14 @@ int FacebookProto::OnPreShutdown(WPARAM wParam,LPARAM lParam)
 int FacebookProto::OnIdleChanged(WPARAM wParam,LPARAM lParam)
 {
 	// Actually, is this ever called?
+	// TODO: Don't toggle anything when Away status feature in use
 	if (!(lParam & IDF_PRIVACY) && (lParam & IDF_ISIDLE)) {
 		facy.idle_ = true;
-		Log("Swiched self to Idle");
+		Log(" ii   Swiched self to Idle");
 	} else {
 		facy.idle_ = false;
-		Log("Swiched self back from Idle");
-		facy.reconnect(); // "reconnect" into online state
+		Log(" ii   Swiched self back from Idle");
+		facy.reconnect( ); // "reconnect" into online state
 	}
 	return 0;
 }

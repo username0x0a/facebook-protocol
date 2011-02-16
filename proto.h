@@ -184,8 +184,6 @@ public:
 	std::string def_avatar_folder_;
 	HANDLE  hAvatarFolder_;
 
-	static void CALLBACK APC_callback(ULONG_PTR p);
-
 	// Information providing
 	int Log(const char *fmt,...);
 	int NotifyEvent(TCHAR* title, TCHAR* info, HANDLE contact, DWORD flags, TCHAR* url=NULL);

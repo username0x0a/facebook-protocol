@@ -29,13 +29,13 @@ Last change on : $Date: 2011-02-12 21:32:51 +0100 (Sat, 12 Feb 2011) $
 
 // Version management
 #include "build.h"
-#define __VERSION_DWORD             PLUGIN_MAKE_VERSION(0, 1, 3, 4)
+#define __VERSION_DWORD             PLUGIN_MAKE_VERSION(0, 1, 3, 5)
 #define __PRODUCT_DWORD             PLUGIN_MAKE_VERSION(0, 9, 14, 0)
-#define __VERSION_STRING            "0.1.3.4"
+#define __VERSION_STRING            "0.1.3.5"
 #define __PRODUCT_STRING            "0.9.14.0"
-#define __VERSION_VS_FILE           0,1,3,4
+#define __VERSION_VS_FILE           0,1,3,5
 #define __VERSION_VS_PROD           0,9,14,0
-#define __VERSION_VS_FILE_STRING    "0, 1, 3, 4"
+#define __VERSION_VS_FILE_STRING    "0, 1, 3, 5"
 #define __VERSION_VS_PROD_STRING    "0, 9, 14, 0"
 #define __API_VERSION_STRING        "3.2"
 
@@ -73,7 +73,7 @@ Last change on : $Date: 2011-02-12 21:32:51 +0100 (Sat, 12 Feb 2011) $
 #define FACEBOOK_GROUP_NAME_LIMIT   100
 
 // Defaults
-#define FACEBOOK_MINIMAL_POLL_RATE      10
+#define FACEBOOK_MINIMAL_POLL_RATE      15
 #define FACEBOOK_DEFAULT_POLL_RATE      24 // in seconds
 #define FACEBOOK_MAXIMAL_POLL_RATE      60
 #define FACEBOOK_USER_UPDATE_RATE       7200 // in seconds
@@ -116,7 +116,11 @@ Last change on : $Date: 2011-02-12 21:32:51 +0100 (Sat, 12 Feb 2011) $
 #define FACEBOOK_REQUEST_MESSAGE_SEND           300 // sending message
 #define FACEBOOK_REQUEST_MESSAGES_RECEIVE       301 // receiving messages
 #define FACEBOOK_REQUEST_TYPING_SEND            304 // sending typing notification
-#define FACEBOOK_REQUEST_SETTINGS               305 // closing message window, setting chat visibility
+#define FACEBOOK_REQUEST_CHAT_SETTINGS          305 // closing message window, setting chat visibility
+
+// Chat settings flags
+#define FACEBOOK_CHAT_VISIBILITY    0x01
+#define FACEBOOK_CHAT_CLOSE_WINDOW  0x02
 
 // Reconnect flags
 #define FACEBOOK_RECONNECT_LOGIN        "6" // When logging in // TODO: 5?

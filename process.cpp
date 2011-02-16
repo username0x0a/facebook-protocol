@@ -168,9 +168,10 @@ void FacebookProto::ProcessFeeds( void* data )
 	std::vector< facebook_newsfeed* > news;
 
 	std::string::size_type pos = 0;
-	UINT limit = 0;
+	unsigned int count = utils::conversion::from_string(
+	    utils::text::source_get_value( resp, 2, "storyCount\":", "," ) );
 
-	while ( ( ( pos = resp->find( "\\u003ch6", pos ) ) != std::string::npos ) && ( limit <= 25 ) )
+	while ( ( ( pos = resp->find( "\\u003ch6", pos ) ) != std::string::npos ) && ( count > 0 ) )
 	{
 		std::string post_content = resp->substr( pos, resp->find( "\\u003c\\/h6", pos ) - pos );
 		std::string rest_content = resp->substr( resp->find( "class=\\\"uiStreamSource\\\"", pos ), resp->find( "<abbr title=", pos ) );
@@ -204,7 +205,7 @@ void FacebookProto::ProcessFeeds( void* data )
 			delete nf;
 
 		pos++;
-		limit++;
+		count--;
 	}
 
 	for(std::vector<facebook_newsfeed*>::size_type i=0; i<news.size( ); i++)
