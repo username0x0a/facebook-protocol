@@ -48,31 +48,47 @@ std::string utils::time::mili_timestamp( )
 	SYSTEMTIME st;
 	std::string timestamp = utils::time::unix_timestamp();
 	GetSystemTime(&st);
-	timestamp.append(utils::conversion::to_string( ( void* )&st.wMilliseconds, UTILS_CONV_UNSIGNED_NUMBER ));
+	timestamp.append(utils::conversion::to_string( ( void* )&st.wMilliseconds, UTILS_CONV_UNSIGNED | UTILS_CONV_INTEGER ));
 	return timestamp;
 }
 
-std::string utils::conversion::to_string( void* data, WORD type )
+unsigned int utils::conversion::from_string(const std::string& s)
+{
+	std::istringstream stream (s);
+	unsigned int t;
+	stream >> t;
+	return t;
+}
+
+std::string utils::conversion::to_string( void* data, WORD flag )
 {
 	std::stringstream out;
-
+ 
+	WORD type = flag & 0x00FF;
+ 
 	switch ( type )
 	{
-
+ 
 	case UTILS_CONV_BOOLEAN:
 		if ( (*( bool* )data) == true ) return "true";
-		else return "false";
+		return "false";
 
 	case UTILS_CONV_TIME_T:
 		out << (*( time_t* )data);
 		break;
 
-	case UTILS_CONV_SIGNED_NUMBER:
-		out << (*( signed long long* )data);
+	case UTILS_CONV_INTEGER:
+		if (FLAG_CONTAINS(flag,UTILS_CONV_UNSIGNED)) out << (*( unsigned int* )data);
+		else out << (*( int* )data);
 		break;
 
-	case UTILS_CONV_UNSIGNED_NUMBER:
-		out << (*( unsigned long long* )data);
+	case UTILS_CONV_INTEGER64:
+		if (FLAG_CONTAINS(flag,UTILS_CONV_UNSIGNED)) out << (*( unsigned __int64* )data);
+		else out << (*( __int64* )data);
+		break;
+
+	case UTILS_CONV_FLOAT:
+		out << (*( float* )data);
 		break;
 
 	}

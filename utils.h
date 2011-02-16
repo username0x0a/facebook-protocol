@@ -27,14 +27,12 @@ Last change on : $Date: 2011-01-08 11:10:34 +0100 (Sat, 08 Jan 2011) $
 
 #pragma once
 
-// C++ bool type
-#define UTILS_CONV_BOOLEAN              0x0001 // true | false
-// signed regular numbers
-#define UTILS_CONV_SIGNED_NUMBER        0x0010 // 1234 | -1234
-// unsigned regular numbers
-#define UTILS_CONV_UNSIGNED_NUMBER      0x0020 // 1234
-// miscellaneous
-#define UTILS_CONV_TIME_T               0x0040 // 1234567890
+#define UTILS_CONV_BOOLEAN      0x0001
+#define UTILS_CONV_INTEGER      0x0002
+#define UTILS_CONV_INTEGER64    0x0004
+#define UTILS_CONV_FLOAT        0x0008
+#define UTILS_CONV_TIME_T       0x0040
+#define UTILS_CONV_UNSIGNED     0x1000
 
 template<typename T>
 void CreateProtoService(const char *module,const char *service,
@@ -92,7 +90,8 @@ namespace utils
 	};
 
 	namespace conversion {
-		std::string to_string( void*, WORD type );
+		unsigned int from_string(const std::string& s);
+		std::string to_string( void*, WORD flag );
 	};
 
 	namespace debug {

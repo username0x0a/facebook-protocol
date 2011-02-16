@@ -183,7 +183,7 @@ void FacebookProto::UpdateLoop(void *)
 				break;
 		if ( !isOnline( ) )
 			break;
-		if ( i % 8 == 7 ) // TODO: More often? Another solution?
+		if ( i % 7 == 6 )
 			if ( !facy.keep_alive( ) )
 				break;
 		if ( !isOnline( ) )
