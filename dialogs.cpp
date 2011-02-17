@@ -223,7 +223,7 @@ INT_PTR CALLBACK FBOptionsProc( HWND hwnd, UINT message, WPARAM wparam, LPARAM l
 		for(size_t i=0; i<SIZEOF(user_agents); i++)
 		{
 			SendDlgItemMessageA(hwnd,IDC_AGENT,CB_INSERTSTRING,i,
-				reinterpret_cast<LPARAM>(user_agents[i]));
+				reinterpret_cast<LPARAM>(user_agents[i].user_name));
 		}
 		SendDlgItemMessage(hwnd, IDC_AGENT, CB_SETCURSEL,
 		    DBGetContactSettingByte(NULL, proto->m_szModuleName, "UserAgent", 0), 0);
@@ -349,6 +349,14 @@ INT_PTR CALLBACK FBEventsProc( HWND hwnd, UINT message, WPARAM wparam, LPARAM lp
 		SendDlgItemMessage(hwnd, IDC_TIMEOUT4, EM_LIMITTEXT, 4, 0);
 		SendDlgItemMessage(hwnd, IDC_TIMEOUT_SPIN4, UDM_SETRANGE32, -1, 100);
 
+		for(size_t i=0; i<SIZEOF(feed_types); i++)
+		{
+			SendDlgItemMessageA(hwnd,IDC_FEEDS_TYPE,CB_INSERTSTRING,i,
+				reinterpret_cast<LPARAM>(feed_types[i].user_name));
+		}
+		SendDlgItemMessage(hwnd, IDC_FEEDS_TYPE, CB_SETCURSEL,
+		    DBGetContactSettingByte(NULL, proto->m_szModuleName, FACEBOOK_KEY_EVENT_FEEDS_TYPE, DEFAULT_EVENT_FEEDS_TYPE), 0);
+
 	} return TRUE;
 
 	case WM_COMMAND: {
@@ -412,6 +420,9 @@ INT_PTR CALLBACK FBEventsProc( HWND hwnd, UINT message, WPARAM wparam, LPARAM lp
 			DBWriteContactSettingDword(NULL, proto->m_szModuleName, FACEBOOK_KEY_EVENT_CLIENT_COLBACK, SendDlgItemMessage(hwnd,IDC_COLBACK4,CPM_GETCOLOUR,0,0));
 			DBWriteContactSettingDword(NULL, proto->m_szModuleName, FACEBOOK_KEY_EVENT_CLIENT_COLTEXT, SendDlgItemMessage(hwnd,IDC_COLTEXT4,CPM_GETCOLOUR,0,0));
 			DBWriteContactSettingDword(NULL, proto->m_szModuleName, FACEBOOK_KEY_EVENT_CLIENT_TIMEOUT, GetDlgItemInt(hwnd,IDC_TIMEOUT4,NULL,TRUE));
+
+			DBWriteContactSettingByte(NULL, proto->m_szModuleName, FACEBOOK_KEY_EVENT_FEEDS_TYPE,
+			    SendDlgItemMessage(hwnd, IDC_FEEDS_TYPE, CB_GETCURSEL, 0, 0));
 
 		} }
 		return TRUE;

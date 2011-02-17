@@ -20,7 +20,7 @@
 #define IDC_POLLRATE                    1023
 #define IDC_SECURE                      1024
 #define IDC_CLOSE_WINDOWS               1025
-#define IDC_SET_STATUS                  1126
+#define IDC_SET_STATUS                  1026
 #define IDC_LOGGING                     1027
 #define IDC_COOKIES                     1028
 #define IDC_NOTIFICATIONS_ENABLE        1041
@@ -47,6 +47,7 @@
 #define IDC_TIMEOUT_SPIN3               1086
 #define IDC_TIMEOUT4                    1087
 #define IDC_TIMEOUT_SPIN4               1088
+#define IDC_FEEDS_TYPE                  1097
 #define IDC_SYSTRAY_NOTIFY              1098
 #define IDC_PREVIEW                     1099
 #define IDC_DEBUGINFO                   1101

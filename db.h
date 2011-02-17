@@ -89,4 +89,5 @@ Last change on : $Date: 2011-02-12 21:32:51 +0100 (Sat, 12 Feb 2011) $
 #define FACEBOOK_KEY_EVENT_CLIENT_TIMEOUT           "PopupClientTimeout"
 #define FACEBOOK_KEY_EVENT_CLIENT_DEFAULT           "PopupClientColorDefault"
 
+#define FACEBOOK_KEY_EVENT_FEEDS_TYPE               "EventFeedsType"
 #define FACEBOOK_KEY_SYSTRAY_NOTIFY                 "UseSystrayNotify"

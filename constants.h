@@ -90,6 +90,7 @@ Last change on : $Date: 2011-02-12 21:32:51 +0100 (Sat, 12 Feb 2011) $
 #define DEFAULT_EVENT_COLTEXT           0x00000000
 #define DEFAULT_EVENT_TIMEOUT_TYPE      0
 #define DEFAULT_EVENT_TIMEOUT           20
+#define DEFAULT_EVENT_FEEDS_TYPE        0
 #define DEFAULT_SYSTRAY_NOTIFY          0
 #define DEFAULT_SHOW_OLD_FEEDS          0
 
@@ -128,26 +129,39 @@ Last change on : $Date: 2011-02-12 21:32:51 +0100 (Sat, 12 Feb 2011) $
 // TODO: And what about 7? :))
 
 // User-Agents
-static const char* user_agents[] = {
-	"Miranda IM (default)",
-//	"FacebookTouch2.5",
-//	"Facebook/2.5 CFNetwork/342.1 Darwin/9.4.1",
-//	"Lynx/2.8.4rel.1 libwww-FM/2.14",
-	"Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1; Trident/4.0)",
-	"Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0)",
-//	"Mozilla/4.08 [en] (WinNT; U ;Nav)",
-	"Mozilla/5.0 (Windows NT 6.1; rv:2.0) Gecko/20100101 Firefox/4.0",
-//	"Opera/8.01 (J2ME/MIDP; Opera Mini/3.0.6306/1528; nb; U; ssr)",
-//	"Opera/9.27 (Windows NT 5.1; U; en)",
-//	"Opera/9.64 (Windows NT 5.1; U; en)",
-	"Opera/9.80 (Windows NT 5.1; U; en) Presto/2.7.62 Version/11.01",
-	"Opera/9.80 (Macintosh; Intel Mac OS X 10.5.8; U; en) Presto/2.7.62 Version/11.01",
-	"Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_7; en-us) AppleWebKit/534.16+ (KHTML, like Gecko) Version/5.0.3 Safari/533.19.4",
-	"Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US) AppleWebKit/534.19 (KHTML, like Gecko) Chrome/11.0.661.0 Safari/534.19",
-//	"Mozilla/5.0 (iPod; U; CPU iPhone OS 2_2_1 like Mac OS X; en-us) AppleWebKit/525.18.1 (KHTML, like Gecko) Version/3.1.1 Mobile/5H11a Safari/525.20",
-//	"HTC-8900/1.2 Mozilla/4.0 (compatible; MSIE 6.0; Windows CE; IEMobile 7.6) UP.Link/6.3.0.0.0",
-//	"BlackBerry8320/4.3.1 Profile/MIDP-2.0 Configuration/CLDC-1.1",
-//	"Opera/9.60 (J2ME/MIDP; Opera Mini/4.2.13337/504; U; en) Presto/2.2.0",
-//	"Nokia6230/2.0+(04.43)+Profile/MIDP-2.0+Configuration/CLDC-1.1+UP.Link/6.3.0.0.0",
-//	"Mozilla/5.0 (webOS/1.0; U; en-US) AppleWebKit/525.27.1 (KHTML, like Gecko) Version/1.0 Safari/525.27.1 Pre/1.0",
+static const struct {
+	const char* user_name;
+	const char* user_agent_string;
+} user_agents[] = {
+	{ "Miranda IM (default)", "" },
+//	{ "Facebook for iPhone", "FacebookTouch2.5" },
+//	{ "Facebook for iPhone Alternative", "Facebook/2.5 CFNetwork/342.1 Darwin/9.4.1" },
+//	{ "Lynx 2.8.4", "Lynx/2.8.4rel.1 libwww-FM/2.14" },
+	{ "Internet Explorer 8", "Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1; Trident/4.0)" },
+	{ "Internet Explorer 9", "Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0)" },
+//	{ "Mozilla 4.08", "Mozilla/4.08 [en] (WinNT; U ;Nav)" },
+	{ "Firefox 4.0", "Mozilla/5.0 (Windows NT 6.1; rv:2.0) Gecko/20100101 Firefox/4.0" },
+//	{ "Opera Mini 3.0", "Opera/8.01 (J2ME/MIDP; Opera Mini/3.0.6306/1528; nb; U; ssr)" },
+//	{ "Opera 9.27 (Windows XP)", "Opera/9.27 (Windows NT 5.1; U; en)" },
+//	{ "Opera 9.64 (Windows XP)", "Opera/9.64 (Windows NT 5.1; U; en)" },
+	{ "Opera 11.01 (Windows XP)", "Opera/9.80 (Windows NT 5.1; U; en) Presto/2.7.62 Version/11.01" },
+	{ "Opera 11.01 (Mac OS X 10.5.8)", "Opera/9.80 (Macintosh; Intel Mac OS X 10.5.8; U; en) Presto/2.7.62 Version/11.01" },
+	{ "Safari 5.0.3 (Mac OS X 10.6.7)", "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_7; en-us) AppleWebKit/534.16+ (KHTML, like Gecko) Version/5.0.3 Safari/533.19.4" },
+	{ "Google Chrome 11.0.661 (Windows XP)", "Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US) AppleWebKit/534.19 (KHTML, like Gecko) Chrome/11.0.661.0 Safari/534.19" },
+//	{ "Mobile Safari 3.1.1", "Mozilla/5.0 (iPod; U; CPU iPhone OS 2_2_1 like Mac OS X; en-us) AppleWebKit/525.18.1 (KHTML, like Gecko) Version/3.1.1 Mobile/5H11a Safari/525.20" },
+//	{ "IE Mobile 7.6", "HTC-8900/1.2 Mozilla/4.0 (compatible; MSIE 6.0; Windows CE; IEMobile 7.6) UP.Link/6.3.0.0.0" },
+//	{ "Blackberry 8320", "BlackBerry8320/4.3.1 Profile/MIDP-2.0 Configuration/CLDC-1.1" },
+//	{ "Opera Mini 4.2", "Opera/9.60 (J2ME/MIDP; Opera Mini/4.2.13337/504; U; en) Presto/2.2.0" },
+//	{ "Nokia 6230", "Nokia6230/2.0+(04.43)+Profile/MIDP-2.0+Configuration/CLDC-1.1+UP.Link/6.3.0.0.0" },
+//	{ "Palm Pre (webOS 1.0)", "Mozilla/5.0 (webOS/1.0; U; en-US) AppleWebKit/525.27.1 (KHTML, like Gecko) Version/1.0 Safari/525.27.1 Pre/1.0" }
 };
+
+// News Feed types
+static const struct {
+	const char* user_name;
+	const char* value;
+} feed_types[] = {
+	{ "Most recent", "lf" },
+	{ "Status Updates", "app_2915120374" }
+};
+
