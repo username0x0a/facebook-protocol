@@ -285,7 +285,12 @@ std::string facebook_client::choose_action( int request_type, std::string* data 
 	case FACEBOOK_REQUEST_FEEDS: {
 		// Filters: lf = live feed, h = news feed
 		// TODO: Make filter selection customizable?
-		std::string action = "/ajax/intent.php?filter=lf&request_type=1&__a=1&newest=%s&ignore_self=true";
+		std::string action = "/ajax/intent.php?filter=%s&request_type=1&__a=1&newest=%s&ignore_self=true";
+		unsigned int type_id = DBGetContactSettingByte( NULL, parent->m_szModuleName,
+		    FACEBOOK_KEY_EVENT_FEEDS_TYPE, DEFAULT_EVENT_FEEDS_TYPE );
+		if ( type_id >= SIZEOF( feed_types ) || type_id < 0 )
+			type_id = DEFAULT_EVENT_FEEDS_TYPE;
+		utils::text::replace_first( &action, "%s", feed_types[type_id].value );
 		std::string newest = utils::conversion::to_string((void*)&this->last_feeds_update_, UTILS_CONV_TIME_T);
 		utils::text::replace_first( &action, "%s", newest );
 		return action; }
@@ -436,7 +441,7 @@ std::string facebook_client::get_user_agent( )
 {
 	BYTE user_agent = DBGetContactSettingByte(NULL, parent->m_szModuleName, FACEBOOK_KEY_USER_AGENT, 0);
 	if (user_agent > 0 && user_agent < SIZEOF(user_agents))
-		return user_agents[user_agent];
+		return user_agents[user_agent].user_agent_string;
 	else return g_strUserAgent;
 }
 
