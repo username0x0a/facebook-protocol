@@ -1,4 +1,12 @@
 
+0.1.3.6
+-------
+
+- Added an acknowledgement call when own avatar changes (but not working though)
+- Added News Feed filtering
+- User-Agent selection names made more user-friendly
+- Deeper 64bit adoptation, a testing release should come soon
+
 0.1.3.5
 -------
 
