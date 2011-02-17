@@ -45,7 +45,7 @@ http::response facebook_client::flap( const int request_type, std::string* reque
 	if ( request_data != NULL )
 	{
 		nlhr.pData = (char*)(*request_data).c_str();
-		nlhr.dataLength = request_data->length( );
+		nlhr.dataLength = (int)request_data->length( );
 	}
 
 	parent->Log("@@@@@ Sending request to '%s'", nlhr.szUrl);

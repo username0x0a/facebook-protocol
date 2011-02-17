@@ -54,9 +54,12 @@ void FacebookProto::UpdateAvatarWorker(void *p)
 			LOG("***** Terminating avatar update early: %s",data->url.c_str());
 		else
 		{
-			if(facy.save_url(new_url,filename))
+			if(facy.save_url(new_url,filename)) {
 				ProtoBroadcastAck(m_szModuleName,data->hContact,ACKTYPE_AVATAR,
 					ACKRESULT_SUCCESS,&ai,0);
+				if ( data->hContact == NULL )
+					CallService( MS_AV_REPORTMYAVATARCHANGED, (WPARAM)this, NULL );
+			}
 			else
 				ProtoBroadcastAck(m_szModuleName,data->hContact,ACKTYPE_AVATAR,
 					ACKRESULT_FAILED, &ai,0);
