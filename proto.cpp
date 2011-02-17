@@ -120,7 +120,7 @@ FacebookProto::~FacebookProto( )
 
 //////////////////////////////////////////////////////////////////////////////
 
-DWORD FacebookProto::GetCaps( int type, HANDLE hContact )
+DWORD_PTR FacebookProto::GetCaps( int type, HANDLE hContact )
 {
 	switch(type)
 	{
@@ -228,7 +228,7 @@ int FacebookProto::SetStatus( WPARAM wParam, LPARAM lParam )
 	return SetStatus( (int)wParam );
 }
 
-int FacebookProto::GetMyAwayMsg( WPARAM wParam, LPARAM lParam )
+INT_PTR FacebookProto::GetMyAwayMsg( WPARAM wParam, LPARAM lParam )
 {
 	DBVARIANT dbv = { DBVT_TCHAR };
 	if ( !getTString( "StatusMsg", &dbv ) && lstrlen( dbv.ptszVal ) != 0 )
@@ -269,7 +269,7 @@ int FacebookProto::GetName( WPARAM wParam, LPARAM lParam )
 	return 0;
 }
 
-int FacebookProto::SvcCreateAccMgrUI(WPARAM wParam,LPARAM lParam)
+INT_PTR FacebookProto::SvcCreateAccMgrUI(WPARAM wParam,LPARAM lParam)
 {
 	return (int)CreateDialogParam(g_hInstance,MAKEINTRESOURCE(IDD_FACEBOOKACCOUNT), 
 		 (HWND)lParam, FBAccountProc, (LPARAM)this );

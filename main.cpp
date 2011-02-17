@@ -139,11 +139,11 @@ int OnModulesLoaded(WPARAM,LPARAM)
 		upd.szBetaVersionURL     = "http://dev.miranda.im/~jarvis/";
 		upd.szBetaChangelogURL   = "http://dev.miranda.im/~jarvis/";
 		upd.pbBetaVersionPrefix  = reinterpret_cast<BYTE*>("Facebook</a> ");
-		upd.cpbBetaVersionPrefix = strlen(reinterpret_cast<char*>(upd.pbBetaVersionPrefix));
+		upd.cpbBetaVersionPrefix = (int)strlen(reinterpret_cast<char*>(upd.pbBetaVersionPrefix));
 		upd.szBetaUpdateURL      = "http://dev.miranda.im/~jarvis/";
 		upd.pbVersion = reinterpret_cast<BYTE*>( CreateVersionStringPlugin(
-			reinterpret_cast<PLUGININFO*>(&pluginInfo),curr_version) );
-		upd.cpbVersion = strlen(reinterpret_cast<char*>(upd.pbVersion));
+		    reinterpret_cast<PLUGININFO*>(&pluginInfo),curr_version) );
+		upd.cpbVersion = (int)strlen(reinterpret_cast<char*>(upd.pbVersion));
 		CallService(MS_UPDATE_REGISTER,0,(LPARAM)&upd);
 	}
 
