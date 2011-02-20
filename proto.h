@@ -132,7 +132,7 @@ public:
 	BYTE    GetPollRate( );
 	void __cdecl MessageLoop(void *);
 	void __cdecl UpdateLoop(void *);
-	void    KillThreads( );
+	void __cdecl KillThreads(void *);
 
 	// Processing threads
 	void __cdecl ProcessBuddyList( void* );
@@ -179,7 +179,9 @@ public:
 
 	HANDLE  m_hNetlibUser;
 	HANDLE  m_hUpdLoop;
+	time_t  m_tUpdLoop;
 	HANDLE  m_hMsgLoop;
+	time_t  m_tMsgLoop;
 
 	std::string def_avatar_folder_;
 	HANDLE  hAvatarFolder_;

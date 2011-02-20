@@ -57,7 +57,10 @@ void FacebookProto::UpdateAvatarWorker(void *p)
 			if(facy.save_url(new_url,filename)) {
 				ProtoBroadcastAck(m_szModuleName,data->hContact,ACKTYPE_AVATAR,
 					ACKRESULT_SUCCESS,&ai,0);
+				DBWriteContactSettingString( ai.hContact, m_szModuleName,
+				    "AvatarFile", filename.c_str() );
 				if ( data->hContact == NULL )
+					// Not working though
 					CallService( MS_AV_REPORTMYAVATARCHANGED, (WPARAM)this, NULL );
 			}
 			else
