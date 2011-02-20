@@ -96,7 +96,6 @@ FacebookProto::FacebookProto(const char* proto_name,const TCHAR* username)
 
 FacebookProto::~FacebookProto( )
 {
-	KillThreads( );
 	Netlib_CloseHandle( m_hNetlibUser );
 
 // TODO: Is this really explicitly needed?

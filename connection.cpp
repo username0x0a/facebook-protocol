@@ -27,20 +27,23 @@ Last change on : $Date: 2011-02-12 21:32:51 +0100 (Sat, 12 Feb 2011) $
 
 #include "common.h"
 
-void FacebookProto::KillThreads( )
+void FacebookProto::KillThreads( void* )
 {
+	HANDLE local_msgLoop = m_hMsgLoop, local_updLoop = m_hUpdLoop;
+	m_hMsgLoop = NULL; m_hUpdLoop = NULL;
+
 	// Kill the old threads if they are still around
-	if(m_hMsgLoop)
+	if(local_msgLoop)
 	{
 		LOG("***** Requesting MessageLoop to exit");
-		WaitForSingleObject(m_hMsgLoop,IGNORE);
-		ReleaseMutex(m_hMsgLoop);
+		WaitForSingleObject(local_msgLoop,60000);
+		CloseHandle(local_msgLoop);
 	}
-	if(m_hUpdLoop)
+	if(local_updLoop)
 	{
 		LOG("***** Requesting UpdateLoop to exit");
-		WaitForSingleObject(m_hUpdLoop,IGNORE);
-		ReleaseMutex(m_hUpdLoop);
+		WaitForSingleObject(local_updLoop,10000);
+		CloseHandle(local_updLoop);
 	}
 }
 
@@ -48,8 +51,6 @@ void FacebookProto::SignOn(void*)
 {
 	ScopedLock s(signon_lock_);
 	LOG("***** Beginning SignOn process");
-
-	KillThreads( );
 
 	if ( NegotiateConnection( ) )
 	{
@@ -71,7 +72,7 @@ void FacebookProto::SignOff(void*)
 	ScopedLock b(facy.buddies_lock_);
 	LOG("##### Beginning SignOff process");
 
-	KillThreads( );
+	ForkThreadEx( &FacebookProto::KillThreads, this );
 
 	deleteSetting( "LogonTS" );
 
@@ -167,11 +168,14 @@ error:
 void FacebookProto::UpdateLoop(void *)
 {
 	ScopedLock s(update_loop_lock_); // TODO: Required?
-	LOG( ">>>>> Entering Facebook::UpdateLoop" );
+	time_t thread_current = m_tUpdLoop = time(NULL);
+	LOG( ">>>>> Entering FacebookProto::UpdateLoop [%d]", thread_current );
 
-	for ( DWORD i = 0; ; i = ++i % 48 )
+	for ( DWORD i = 0; ; i = ++i % 42 )
 	{
 		if ( !isOnline( ) )
+			break;
+		if ( thread_current != m_tUpdLoop )
 			break;
 		if ( i != 0 )
 			if ( !facy.buddy_list( ) )
@@ -188,30 +192,36 @@ void FacebookProto::UpdateLoop(void *)
 				break;
 		if ( !isOnline( ) )
 			break;
-		LOG( "***** FacebookProto::UpdateLoop going to sleep..." );
+		LOG( "***** FacebookProto::UpdateLoop [%d] going to sleep...",
+		    thread_current );
 		if ( SleepEx( GetPollRate( ) * 1000, true ) == WAIT_IO_COMPLETION )
 			break;
-		LOG( "***** FacebookProto::UpdateLoop waking up..." );
+		LOG( "***** FacebookProto::UpdateLoop [%d] waking up...",
+		    thread_current );
 	}
 
-	LOG( "<<<<< Exiting FacebookProto::UpdateLoop" );
+	LOG( "<<<<< Exiting FacebookProto::UpdateLoop [%d]", thread_current );
 }
 
 void FacebookProto::MessageLoop(void *)
 {
 	ScopedLock s(message_loop_lock_); // TODO: Required?
-	LOG( ">>>>> Entering Facebook::MessageLoop" );
+	time_t thread_current = m_tMsgLoop = time(NULL);
+	LOG( ">>>>> Entering FacebookProto::MessageLoop [%d]", thread_current );
 
 	while ( true )
 	{
 		if ( !isOnline( ) )
 			break;
+		if ( thread_current != m_tMsgLoop )
+			break;
 		if ( !facy.channel( ) )
 			break;
-		LOG( "***** FacebookProto::MessageLoop refreshing..." );
+		LOG( "***** FacebookProto::MessageLoop [%d] refreshing...",
+		    thread_current );
 	}
 
-	LOG( "<<<<< Exiting FacebookProto::MessageLoop" );
+	LOG( "<<<<< Exiting FacebookProto::MessageLoop [%d]", thread_current );
 }
 
 BYTE FacebookProto::GetPollRate( )
