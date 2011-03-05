@@ -29,17 +29,18 @@ Last change on : $Date: 2011-02-12 21:32:51 +0100 (Sat, 12 Feb 2011) $
 
 // Version management
 #include "build.h"
-#define __VERSION_DWORD             PLUGIN_MAKE_VERSION(0, 1, 3, 7)
+#define __VERSION_DWORD             PLUGIN_MAKE_VERSION(0, 1, 3, 8)
 #define __PRODUCT_DWORD             PLUGIN_MAKE_VERSION(0, 9, 14, 0)
-#define __VERSION_STRING            "0.1.3.7"
+#define __VERSION_STRING            "0.1.3.8"
 #define __PRODUCT_STRING            "0.9.14.0"
-#define __VERSION_VS_FILE           0,1,3,7
+#define __VERSION_VS_FILE           0,1,3,8
 #define __VERSION_VS_PROD           0,9,14,0
-#define __VERSION_VS_FILE_STRING    "0, 1, 3, 7"
+#define __VERSION_VS_FILE_STRING    "0, 1, 3, 8"
 #define __VERSION_VS_PROD_STRING    "0, 9, 14, 0"
-#define __API_VERSION_STRING        "3.2"
+#define __API_VERSION_STRING        "3.3"
 
 // API versions
+// 3.3 -- changes in chat feature (sending & receiving messages)
 // 3.2 -- minor change in Machine name, Chat server URL
 // 3.1 -- minor change in Logout procedure
 // 3.0 -- lots of source changes on Facebook site

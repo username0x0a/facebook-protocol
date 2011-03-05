@@ -75,6 +75,10 @@ HANDLE FacebookProto::AddToContactList(facebook_user* fbu)
 		if(CallService(MS_PROTO_ADDTOCONTACT,(WPARAM)hContact,(LPARAM)m_szModuleName) == 0)
 		{
 			DBWriteContactSettingString(hContact,m_szModuleName,FACEBOOK_KEY_ID,fbu->user_id.c_str());
+			std::string profile_url = FACEBOOK_URL_HOMEPAGE;
+			profile_url += "profile.php?id=";
+			profile_url += fbu->user_id;
+			DBWriteContactSettingString(hContact,m_szModuleName,"Homepage",profile_url.c_str());
 			DBDeleteContactSetting(hContact, "CList", "MyHandle");
 			DBVARIANT dbv;
 			if( !DBGetContactSettingTString(NULL,m_szModuleName,FACEBOOK_KEY_DEF_GROUP,&dbv) )
@@ -82,7 +86,7 @@ HANDLE FacebookProto::AddToContactList(facebook_user* fbu)
 				DBWriteContactSettingTString(hContact,"CList","Group",dbv.ptszVal);
 				DBFreeVariant(&dbv);
 			}
-			if (getByte(FACEBOOK_KEY_DISABLE_STATUS_NOTIFY, 0))
+			if (getByte(FACEBOOK_KEY_DISABLE_STATUS_NOTIFY, 0)) // TODO: Obsolete?
 				CallService(MS_IGNORE_IGNORE, (WPARAM)hContact, (LPARAM)IGNOREEVENT_USERONLINE);
 			return hContact;
 		}

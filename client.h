@@ -143,6 +143,8 @@ public:
 
 	// Messages handling
 
+	std::list<std::string> messageIDs;
+
 	bool    channel( );
 	bool    send_message( std::string message_recipient, std::string message_text );
 	bool    close_chat( std::string contact_id );

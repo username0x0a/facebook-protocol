@@ -1,4 +1,12 @@
 
+0.1.3.8
+-------
+
+- Fixed sending messages
+- Fix for receiving messages twice
+- Small fix for news feed events
+- Some more minor fixes
+
 0.1.3.7
 -------
 
