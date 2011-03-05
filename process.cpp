@@ -106,17 +106,18 @@ void FacebookProto::ProcessMessages( void* data )
 			HANDLE hContact = AddToContactList(&fbu);
 			DBWriteContactSettingWord(hContact,m_szModuleName,"Status",ID_STATUS_ONLINE);
 
-			PROTORECVEVENT recv = {};
-			CCSDATA ccs = {};
+			PROTORECVEVENT recv = {0};
+			CCSDATA ccs = {0};
 
 			recv.flags = PREF_UTF;
+			recv.lParam = 0;
 			recv.szMessage = const_cast<char*>(messages[i]->message_text.c_str());
 			recv.timestamp = static_cast<DWORD>(messages[i]->time);
 
 			ccs.hContact = hContact;
 			ccs.szProtoService = PSR_MESSAGE;
-			ccs.wParam = ID_STATUS_ONLINE;
-			ccs.lParam = reinterpret_cast<LPARAM>(&recv);
+			ccs.wParam = 0;
+			ccs.lParam = (LPARAM)&recv;
 			CallService(MS_PROTO_CHAINRECV,0,reinterpret_cast<LPARAM>(&ccs));
 		}
 		delete messages[i];
@@ -180,7 +181,7 @@ void FacebookProto::ProcessFeeds( void* data )
 
 		nf->title = utils::text::source_get_value( &post_content, 3, "\\u003ca ", "\\\">", "\\u003c\\/a>" );
 
-		nf->user_id = utils::text::source_get_value( &post_content, 2, "user.php?id=", "\"" );
+		nf->user_id = utils::text::source_get_value( &post_content, 2, "user.php?id=", "\\\"" );
 		nf->text = utils::text::source_get_value( &post_content, 2, "\\u003cspan class=\\\"messageBody\\\">", "\\u003c\\/span" );
 		nf->link = utils::text::source_get_value( &rest_content, 2, "href=\\\"", "\\\">" );
 

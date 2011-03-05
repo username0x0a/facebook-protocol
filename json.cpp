@@ -143,6 +143,18 @@ int facebook_json_parser::parse_messages( void* data, std::vector< facebook_mess
 				lltoa( from.Value(), was_id, 10 );
 				
 				const Object& messageContent = objMember["msg"];
+
+				const String& messageID = messageContent["msgID"];
+				bool duplicate = false;
+				for ( std::list<std::string>::iterator i = proto->facy.messageIDs.begin(); i != proto->facy.messageIDs.end(); i++ )
+					if (*i == messageID.Value()) {
+						duplicate = true; break; }
+
+				if ( duplicate ) {
+					proto->facy.messageIDs.remove( messageID.Value() ); continue; }
+				else
+					proto->facy.messageIDs.push_back( messageID.Value() );
+
 				const String& text = messageContent["text"];
 
 				facebook_message* message = new facebook_message( );

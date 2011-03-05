@@ -145,6 +145,7 @@ std::string utils::text::special_expressions_decode( std::string data )
 
 	utils::text::replace_all( &data, "\\/", "/" );
 	utils::text::replace_all( &data, "\\\\", "\\" );
+	utils::text::replace_all( &data, "\\n", "\n" );
 
 	// TODO: Add more to comply general usage
 	// http://www.utexas.edu/learn/html/spchar.html

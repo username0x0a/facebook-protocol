@@ -561,7 +561,8 @@ bool facebook_client::login(const std::string &username,const std::string &passw
 
 	case HTTP_CODE_OK: { // OK page returned, but that is regular login page we don't want in fact
 		// Get error message
-		std::string error_str = utils::text::source_get_value( &resp.data, 2, "id=\"standard_error\">", "</h2>" );
+		std::string error_str = utils::text::remove_html(
+		    utils::text::source_get_value( &resp.data, 2, "id=\"standard_error\">", "</h2>" ) );
 		if ( !error_str.length() )
 			error_str = "Unknown login error";
 		parent->Log(" ! !  Login error: %s", error_str.c_str());
@@ -720,17 +721,18 @@ bool facebook_client::home( )
 					mir_free( count );
 					mir_free( info ); }
 
-				str_count = utils::text::source_get_value( &resp.data, 2, "<span id=\"jewelInnerUnseenCount\">", "</span>" );
-				if ( str_count.length() && str_count != std::string( "0" ) ) {
-					TCHAR* message = TranslateT( "Got new messages: " );
-					TCHAR* count = mir_a2t_cp( str_count.c_str( ), CP_UTF8 );
-					TCHAR* info = ( TCHAR* )malloc( ( lstrlen( message ) + lstrlen( count ) ) * sizeof( TCHAR ) );
-					lstrcpy( info, message );
-					lstrcat( info, count );
-					parent->NotifyEvent( parent->m_tszUserName, info, NULL, FACEBOOK_EVENT_OTHER, TEXT(FACEBOOK_URL_MESSAGES) );
-					mir_free( message );
-					mir_free( count );
-					mir_free( info ); }
+// TODO: Use ever again?
+//				str_count = utils::text::source_get_value( &resp.data, 2, "<span id=\"jewelInnerUnseenCount\">", "</span>" );
+//				if ( str_count.length() && str_count != std::string( "0" ) ) {
+//					TCHAR* message = TranslateT( "Got new messages: " );
+//					TCHAR* count = mir_a2t_cp( str_count.c_str( ), CP_UTF8 );
+//					TCHAR* info = ( TCHAR* )malloc( ( lstrlen( message ) + lstrlen( count ) ) * sizeof( TCHAR ) );
+//					lstrcpy( info, message );
+//					lstrcat( info, count );
+//					parent->NotifyEvent( parent->m_tszUserName, info, NULL, FACEBOOK_EVENT_OTHER, TEXT(FACEBOOK_URL_MESSAGES) );
+//					mir_free( message );
+//					mir_free( count );
+//					mir_free( info ); }
 			}
 
 			// Set first touch flag
@@ -955,6 +957,9 @@ bool facebook_client::send_message( std::string message_recipient, std::string m
 	data += "&to_offline=false";
 	data += "&post_form_id=";
 	data += ( post_form_id_.length( ) ) ? post_form_id_ : "0";
+	data += "&fb_dtsg=";
+	data += ( this->dtsg_.length( ) ) ? this->dtsg_ : "0";
+    data += "&post_form_id_source=AsyncRequest";
 
 	http::response resp = flap( FACEBOOK_REQUEST_MESSAGE_SEND, &data );
 
