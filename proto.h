@@ -157,6 +157,9 @@ public:
 	HANDLE  AddToContactList(facebook_user*);
 	void    SetAllContactStatuses(int);
 	bool    ContactNeedsUpdate(facebook_user*);
+	
+	// JSON parser
+    facebook_json_parser parcy;
 
 	// Connection client
 	facebook_client facy; // TODO: Refactor to "client" and make dynamic

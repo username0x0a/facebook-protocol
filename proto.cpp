@@ -33,7 +33,7 @@ FacebookProto::FacebookProto(const char* proto_name,const TCHAR* username)
 	m_szModuleName = mir_strdup( proto_name );
 	m_tszUserName  = mir_tstrdup( username );
 
-	this->facy.parent = this;
+	this->facy.parent = this->parcy.proto = this;
 	this->facy.last_feeds_update_ = getDword( "LastNotificationsUpdate", 0 );
 
 // TODO: Is this really explicitly needed?

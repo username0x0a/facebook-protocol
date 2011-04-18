@@ -30,16 +30,14 @@ Last change on : $Date: 2011-01-08 11:10:34 +0100 (Sat, 08 Jan 2011) $
 // Parser front-end
 
 #define lltoa _i64toa
+#define atoll _atoi64
 
 class facebook_json_parser
 {
+private:
+    Json::Reader reader;
 public:
 	FacebookProto* proto;
 	int parse_buddy_list( void*, List::List< facebook_user >* );
 	int parse_messages( void*, std::vector< facebook_message* >*, std::vector< facebook_notification* >* );
-
-	facebook_json_parser( FacebookProto* proto )
-	{
-		this->proto = proto;
-	}
 };

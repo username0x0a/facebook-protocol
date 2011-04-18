@@ -42,9 +42,7 @@ void FacebookProto::ProcessBuddyList( void* data )
 
 	ScopedLock s(facy.buddies_lock_);
 
-	facebook_json_parser* p = new facebook_json_parser( this );
-	p->parse_buddy_list( data, &facy.buddies );
-	delete p;
+	parcy.parse_buddy_list( data, &facy.buddies );
 
 	for ( List::Item< facebook_user >* i = facy.buddies.begin( ); i != NULL; )
 	{
@@ -92,9 +90,7 @@ void FacebookProto::ProcessMessages( void* data )
 	std::vector< facebook_message* > messages;
 	std::vector< facebook_notification* > notifications;
 
-	facebook_json_parser* p = new facebook_json_parser( this );
-	p->parse_messages( data, &messages, &notifications );
-	delete p;
+	parcy.parse_messages( data, &messages, &notifications );
 
 	for(std::vector<facebook_message*>::size_type i=0; i<messages.size( ); i++)
 	{
@@ -169,8 +165,9 @@ void FacebookProto::ProcessFeeds( void* data )
 	std::vector< facebook_newsfeed* > news;
 
 	std::string::size_type pos = 0;
-	unsigned int count = utils::conversion::from_string(
-	    utils::text::source_get_value( resp, 2, "storyCount\":", "," ) );
+	unsigned int count;
+	utils::conversion::from_string(
+	    utils::text::source_get_value( resp, 2, "storyCount\":", "," ), &count, C_UNSIGNED | C_INTEGER );
 
 	while ( ( ( pos = resp->find( "\\u003ch6", pos ) ) != std::string::npos ) && ( count > 0 ) )
 	{
