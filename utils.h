@@ -27,12 +27,19 @@ Last change on : $Date: 2011-01-08 11:10:34 +0100 (Sat, 08 Jan 2011) $
 
 #pragma once
 
-#define UTILS_CONV_BOOLEAN      0x0001
-#define UTILS_CONV_INTEGER      0x0002
-#define UTILS_CONV_INTEGER64    0x0004
-#define UTILS_CONV_FLOAT        0x0008
-#define UTILS_CONV_TIME_T       0x0040
-#define UTILS_CONV_UNSIGNED     0x1000
+#define C_UNSIGNED    0x1000
+//
+#define C_BOOLEAN 0x0001
+#define C_CHAR    0x0002
+#define C_SHORT   0x0004
+#define C_INTEGER 0x0008
+#define C_LONG    C_INTEGER
+#define C_INTEGER64   0x0010
+#define C_LONGLONG    C_INTEGER64
+//#define C_FLOAT   0x0020
+#define C_DOUBLE  0x0040
+//#define C_LONGDOUBLE  0x0080
+#define C_TIME_T  0x0100
 
 template<typename T>
 void CreateProtoService(const char *module,const char *service,
@@ -90,8 +97,8 @@ namespace utils
 	};
 
 	namespace conversion {
-		unsigned int from_string(const std::string& s);
-		std::string to_string( void*, WORD flag );
+		void from_string( const std::string& from, void* to, unsigned short flag );
+        std::string to_string( const void* data, unsigned short flag );
 	};
 
 	namespace debug {

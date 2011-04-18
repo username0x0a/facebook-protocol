@@ -29,13 +29,13 @@ Last change on : $Date: 2011-02-12 21:32:51 +0100 (Sat, 12 Feb 2011) $
 
 // Version management
 #include "build.h"
-#define __VERSION_DWORD             PLUGIN_MAKE_VERSION(0, 1, 3, 8)
+#define __VERSION_DWORD             PLUGIN_MAKE_VERSION(0, 1, 3, 9)
 #define __PRODUCT_DWORD             PLUGIN_MAKE_VERSION(0, 9, 14, 0)
-#define __VERSION_STRING            "0.1.3.8"
+#define __VERSION_STRING            "0.1.3.9"
 #define __PRODUCT_STRING            "0.9.14.0"
-#define __VERSION_VS_FILE           0,1,3,8
+#define __VERSION_VS_FILE           0,1,3,9
 #define __VERSION_VS_PROD           0,9,14,0
-#define __VERSION_VS_FILE_STRING    "0, 1, 3, 8"
+#define __VERSION_VS_FILE_STRING    "0, 1, 3, 9"
 #define __VERSION_VS_PROD_STRING    "0, 9, 14, 0"
 #define __API_VERSION_STRING        "3.3"
 
@@ -134,21 +134,21 @@ static const struct {
 	const char* user_name;
 	const char* user_agent_string;
 } user_agents[] = {
-	{ "Miranda IM (default)", "" },
+	{ "Miranda IM (default)", NULL },
+	{ "Google Chrome 11.0.661 (Windows XP)", "Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US) AppleWebKit/534.19 (KHTML, like Gecko) Chrome/11.0.661.0 Safari/534.19" },
+	{ "Safari 5.0.3 (Mac OS X 10.6.7)", "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_7; en-us) AppleWebKit/534.16+ (KHTML, like Gecko) Version/5.0.3 Safari/533.19.4" },
+	{ "Firefox 4.0", "Mozilla/5.0 (Windows NT 6.1; rv:2.0) Gecko/20100101 Firefox/4.0" },
+	{ "Internet Explorer 9", "Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0)" },
+	{ "Internet Explorer 8", "Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1; Trident/4.0)" },
+	{ "Opera 11.01 (Windows XP)", "Opera/9.80 (Windows NT 5.1; U; en) Presto/2.7.62 Version/11.01" },
+	{ "Opera 11.01 (Mac OS X 10.5.8)", "Opera/9.80 (Macintosh; Intel Mac OS X 10.5.8; U; en) Presto/2.7.62 Version/11.01" },
 //	{ "Facebook for iPhone", "FacebookTouch2.5" },
 //	{ "Facebook for iPhone Alternative", "Facebook/2.5 CFNetwork/342.1 Darwin/9.4.1" },
 //	{ "Lynx 2.8.4", "Lynx/2.8.4rel.1 libwww-FM/2.14" },
-	{ "Internet Explorer 8", "Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1; Trident/4.0)" },
-	{ "Internet Explorer 9", "Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0)" },
 //	{ "Mozilla 4.08", "Mozilla/4.08 [en] (WinNT; U ;Nav)" },
-	{ "Firefox 4.0", "Mozilla/5.0 (Windows NT 6.1; rv:2.0) Gecko/20100101 Firefox/4.0" },
 //	{ "Opera Mini 3.0", "Opera/8.01 (J2ME/MIDP; Opera Mini/3.0.6306/1528; nb; U; ssr)" },
 //	{ "Opera 9.27 (Windows XP)", "Opera/9.27 (Windows NT 5.1; U; en)" },
 //	{ "Opera 9.64 (Windows XP)", "Opera/9.64 (Windows NT 5.1; U; en)" },
-	{ "Opera 11.01 (Windows XP)", "Opera/9.80 (Windows NT 5.1; U; en) Presto/2.7.62 Version/11.01" },
-	{ "Opera 11.01 (Mac OS X 10.5.8)", "Opera/9.80 (Macintosh; Intel Mac OS X 10.5.8; U; en) Presto/2.7.62 Version/11.01" },
-	{ "Safari 5.0.3 (Mac OS X 10.6.7)", "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_7; en-us) AppleWebKit/534.16+ (KHTML, like Gecko) Version/5.0.3 Safari/533.19.4" },
-	{ "Google Chrome 11.0.661 (Windows XP)", "Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US) AppleWebKit/534.19 (KHTML, like Gecko) Chrome/11.0.661.0 Safari/534.19" },
 //	{ "Mobile Safari 3.1.1", "Mozilla/5.0 (iPod; U; CPU iPhone OS 2_2_1 like Mac OS X; en-us) AppleWebKit/525.18.1 (KHTML, like Gecko) Version/3.1.1 Mobile/5H11a Safari/525.20" },
 //	{ "IE Mobile 7.6", "HTC-8900/1.2 Mozilla/4.0 (compatible; MSIE 6.0; Windows CE; IEMobile 7.6) UP.Link/6.3.0.0.0" },
 //	{ "Blackberry 8320", "BlackBerry8320/4.3.1 Profile/MIDP-2.0 Configuration/CLDC-1.1" },

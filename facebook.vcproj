@@ -276,34 +276,30 @@
 				>
 			</File>
 			<Filter
-				Name="JSON_CAJUN"
+				Name="jsoncpp"
 				>
 				<File
-					RelativePath=".\JSON_CAJUN\elements.h"
+					RelativePath=".\jsoncpp\json_internalarray.inl"
 					>
 				</File>
 				<File
-					RelativePath=".\JSON_CAJUN\elements.inl"
+					RelativePath=".\jsoncpp\json_internalmap.inl"
 					>
 				</File>
 				<File
-					RelativePath=".\JSON_CAJUN\reader.h"
+					RelativePath=".\jsoncpp\json_reader.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\JSON_CAJUN\reader.inl"
+					RelativePath=".\jsoncpp\json_value.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\JSON_CAJUN\visitor.h"
+					RelativePath=".\jsoncpp\json_valueiterator.inl"
 					>
 				</File>
 				<File
-					RelativePath=".\JSON_CAJUN\writer.h"
-					>
-				</File>
-				<File
-					RelativePath=".\JSON_CAJUN\writer.inl"
+					RelativePath=".\jsoncpp\json_writer.cpp"
 					>
 				</File>
 			</Filter>
@@ -373,6 +369,46 @@
 				RelativePath=".\utils.h"
 				>
 			</File>
+			<Filter
+				Name="jsoncpp"
+				>
+				<File
+					RelativePath=".\jsoncpp\autolink.h"
+					>
+				</File>
+				<File
+					RelativePath=".\jsoncpp\config.h"
+					>
+				</File>
+				<File
+					RelativePath=".\jsoncpp\features.h"
+					>
+				</File>
+				<File
+					RelativePath=".\jsoncpp\forwards.h"
+					>
+				</File>
+				<File
+					RelativePath=".\jsoncpp\json.h"
+					>
+				</File>
+				<File
+					RelativePath=".\jsoncpp\json_batchallocator.h"
+					>
+				</File>
+				<File
+					RelativePath=".\jsoncpp\reader.h"
+					>
+				</File>
+				<File
+					RelativePath=".\jsoncpp\value.h"
+					>
+				</File>
+				<File
+					RelativePath=".\jsoncpp\writer.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="Resource Files"

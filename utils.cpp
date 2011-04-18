@@ -40,7 +40,7 @@ std::string utils::url::encode(const std::string &s)
 std::string utils::time::unix_timestamp( )
 {
 	time_t in = ::time( NULL );
-	return utils::conversion::to_string( ( void* )&in, UTILS_CONV_TIME_T );
+	return utils::conversion::to_string( ( void* )&in, C_TIME_T );
 }
 
 std::string utils::time::mili_timestamp( )
@@ -48,51 +48,96 @@ std::string utils::time::mili_timestamp( )
 	SYSTEMTIME st;
 	std::string timestamp = utils::time::unix_timestamp();
 	GetSystemTime(&st);
-	timestamp.append(utils::conversion::to_string( ( void* )&st.wMilliseconds, UTILS_CONV_UNSIGNED | UTILS_CONV_INTEGER ));
+	timestamp.append(utils::conversion::to_string( ( void* )&st.wMilliseconds, C_UNSIGNED | C_SHORT ));
 	return timestamp;
 }
 
-unsigned int utils::conversion::from_string(const std::string& s)
+void utils::conversion::from_string(const std::string& from, void* to, unsigned short flag)
 {
-	std::istringstream stream (s);
-	unsigned int t;
-	stream >> t;
-	return t;
-}
-
-std::string utils::conversion::to_string( void* data, WORD flag )
-{
-	std::stringstream out;
- 
-	WORD type = flag & 0x00FF;
- 
+	unsigned short type = flag & 0x0FFF;
+	
 	switch ( type )
 	{
- 
-	case UTILS_CONV_BOOLEAN:
+		
+	case C_BOOLEAN:
+		if ( from == "true" || from == "1" || from == "TRUE" ) *(bool*)to = true;
+		else *(bool*)to = false;
+		break;
+		
+	case C_INTEGER:
+		*(int*)to = atoi(from.c_str());
+		break;
+		
+	case C_TIME_T:
+	case C_INTEGER64:
+		*(long long*)to = atoll(from.c_str());
+		break;
+		
+//	case C_FLOAT:
+//		*(float*)dest = atof(from.c_str());
+//		break;
+		
+	}
+}
+
+std::string utils::conversion::to_string(const void* data, unsigned short flag)
+{
+	std::stringstream out;
+	
+	unsigned short type = flag & 0x0FFF;
+	
+	switch ( type )
+	{
+		
+	case C_BOOLEAN:
 		if ( (*( bool* )data) == true ) return "true";
 		return "false";
-
-	case UTILS_CONV_TIME_T:
-		out << (*( time_t* )data);
+		
+	case C_CHAR:
+		if (FLAG_CONTAINS(flag,C_UNSIGNED)) out << 0+(*( unsigned char* )data);
+		else out << 0+(*( char* )data);
 		break;
-
-	case UTILS_CONV_INTEGER:
-		if (FLAG_CONTAINS(flag,UTILS_CONV_UNSIGNED)) out << (*( unsigned int* )data);
+		
+	case C_SHORT:
+		if (FLAG_CONTAINS(flag,C_UNSIGNED)) out << 0+(*( unsigned short* )data);
+		else out << 0+(*( short* )data);
+		break;
+		
+	case C_INTEGER:
+		if (FLAG_CONTAINS(flag,C_UNSIGNED)) out << (*( unsigned int* )data);
 		else out << (*( int* )data);
 		break;
-
-	case UTILS_CONV_INTEGER64:
-		if (FLAG_CONTAINS(flag,UTILS_CONV_UNSIGNED)) out << (*( unsigned __int64* )data);
-		else out << (*( __int64* )data);
+		
+	case C_INTEGER64:
+		if (FLAG_CONTAINS(flag,C_UNSIGNED)) out << (*( unsigned long long* )data);
+		else out << (*( long long* )data);
 		break;
-
-	case UTILS_CONV_FLOAT:
-		out << (*( float* )data);
+		
+	// http://upload.wikimedia.org/wikipedia/commons/d/d2/Float_example.svg
+//	case C_FLOAT:
+//		out << (*( float* )data);
+//		break;
+		
+	// http://upload.wikimedia.org/wikipedia/commons/a/a9/IEEE_754_Double_Floating_Point_Format.svg
+	case C_DOUBLE:
+		out << std::fixed << (*( double* )data);
 		break;
-
-	}
-
+		
+	// http://upload.wikimedia.org/wikipedia/commons/2/26/IEEE_754_Extended_Floating_Point_Format.svg
+//	case C_LONGDOUBLE:
+//		out << (*( long double* )data );
+//		break;
+		
+	case C_TIME_T:
+		out << (*( time_t* )data);
+		break;
+		
+	default:
+		out << "0";
+		break;
+		
+    }
+	
 	return out.str( );
 }
 

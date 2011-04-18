@@ -89,6 +89,7 @@ Last change on : $Date: 2011-01-08 11:10:34 +0100 (Sat, 08 Jan 2011) $
 #include <m_updater.h>
 #include <m_folders.h>
 
+#include "jsoncpp/json.h"
 class FacebookProto;
 
 #include "definitions.h"
@@ -98,8 +99,8 @@ class FacebookProto;
 #include "list.hpp"
 #include "utils.h"
 #include "client.h"
-#include "proto.h"
 #include "json.h"
+#include "proto.h"
 #include "db.h"
 #include "constants.h"
 #include "dialogs.h"

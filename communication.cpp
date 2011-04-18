@@ -291,7 +291,7 @@ std::string facebook_client::choose_action( int request_type, std::string* data 
 		if ( type_id >= SIZEOF( feed_types ) || type_id < 0 )
 			type_id = DEFAULT_EVENT_FEEDS_TYPE;
 		utils::text::replace_first( &action, "%s", feed_types[type_id].value );
-		std::string newest = utils::conversion::to_string((void*)&this->last_feeds_update_, UTILS_CONV_TIME_T);
+		std::string newest = utils::conversion::to_string((void*)&this->last_feeds_update_, C_TIME_T);
 		utils::text::replace_first( &action, "%s", newest );
 		return action; }
 
@@ -328,7 +328,7 @@ std::string facebook_client::choose_action( int request_type, std::string* data 
 		utils::text::replace_first( &action, "%s", utils::time::unix_timestamp() );
 		utils::text::replace_first( &action, "%s", first_time );
 		utils::text::replace_first( &action, "%s", self_.user_id );
-		utils::text::replace_first( &action, "%d", utils::conversion::to_string( (void*)&chat_sequence_num_, UTILS_CONV_UNSIGNED | UTILS_CONV_INTEGER ) );
+		utils::text::replace_first( &action, "%d", utils::conversion::to_string( (void*)&chat_sequence_num_, C_UNSIGNED | C_INTEGER ) );
 		return action; }
 
 	case FACEBOOK_REQUEST_CHAT_SETTINGS:
