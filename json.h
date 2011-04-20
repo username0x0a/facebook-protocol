@@ -29,9 +29,6 @@ Last change on : $Date: 2011-01-08 11:10:34 +0100 (Sat, 08 Jan 2011) $
 
 // Parser front-end
 
-#define lltoa _i64toa
-#define atoll _atoi64
-
 class facebook_json_parser
 {
 private:
