@@ -3,7 +3,7 @@
 Facebook plugin for Miranda Instant Messenger
 _____________________________________________
 
-Copyright © 2009-11 Michal Zelinka
+Copyright ï¿½ 2009-11 Michal Zelinka
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -52,92 +52,60 @@ std::string utils::time::mili_timestamp( )
 	return timestamp;
 }
 
-void utils::conversion::from_string(const std::string& from, void* to, unsigned short flag)
+std::string utils::conversion::to_string( const void* data, unsigned short flag )
 {
-	unsigned short type = flag & 0x0FFF;
-	
-	switch ( type )
-	{
-		
-	case C_BOOLEAN:
-		if ( from == "true" || from == "1" || from == "TRUE" ) *(bool*)to = true;
-		else *(bool*)to = false;
-		break;
-		
-	case C_INTEGER:
-		*(int*)to = atoi(from.c_str());
-		break;
-		
-	case C_TIME_T:
-	case C_INTEGER64:
-		*(long long*)to = atoll(from.c_str());
-		break;
-		
-//	case C_FLOAT:
-//		*(float*)dest = atof(from.c_str());
-//		break;
-		
-	}
-}
+	std::ostringstream out;
 
-std::string utils::conversion::to_string(const void* data, unsigned short flag)
-{
-	std::stringstream out;
-	
 	unsigned short type = flag & 0x0FFF;
-	
+
 	switch ( type )
 	{
-		
+
 	case C_BOOLEAN:
 		if ( (*( bool* )data) == true ) return "true";
 		return "false";
-		
+
 	case C_CHAR:
 		if (FLAG_CONTAINS(flag,C_UNSIGNED)) out << 0+(*( unsigned char* )data);
 		else out << 0+(*( char* )data);
 		break;
-		
+
 	case C_SHORT:
 		if (FLAG_CONTAINS(flag,C_UNSIGNED)) out << 0+(*( unsigned short* )data);
 		else out << 0+(*( short* )data);
 		break;
-		
+
 	case C_INTEGER:
 		if (FLAG_CONTAINS(flag,C_UNSIGNED)) out << (*( unsigned int* )data);
 		else out << (*( int* )data);
 		break;
-		
+
 	case C_INTEGER64:
 		if (FLAG_CONTAINS(flag,C_UNSIGNED)) out << (*( unsigned long long* )data);
 		else out << (*( long long* )data);
 		break;
-		
+
 	// http://upload.wikimedia.org/wikipedia/commons/d/d2/Float_example.svg
-//	case C_FLOAT:
-//		out << (*( float* )data);
-//		break;
-		
+	case C_FLOAT:
+		out << std::setprecision(std::numeric_limits<float>::digits10+5) << (*( float* )data);
+		break;
+
 	// http://upload.wikimedia.org/wikipedia/commons/a/a9/IEEE_754_Double_Floating_Point_Format.svg
 	case C_DOUBLE:
-		out << std::fixed << (*( double* )data);
+		out << std::setprecision(std::numeric_limits<double>::digits10+2) << (*( double* )data);
 		break;
-		
+
 	// http://upload.wikimedia.org/wikipedia/commons/2/26/IEEE_754_Extended_Floating_Point_Format.svg
-//	case C_LONGDOUBLE:
-//		out << (*( long double* )data );
-//		break;
-		
+	case C_LONGDOUBLE:
+		out << std::setprecision(std::numeric_limits<long double>::digits10+2) << (*( long double* )data);
+		break;
+
 	case C_TIME_T:
 		out << (*( time_t* )data);
 		break;
-		
-	default:
-		out << "0";
-		break;
-		
-    }
-	
+
+	}
+
 	return out.str( );
 }
 

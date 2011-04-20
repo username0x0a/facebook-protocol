@@ -36,6 +36,8 @@ Last change on : $Date: 2011-01-08 11:10:34 +0100 (Sat, 08 Jan 2011) $
 #define _WIN32_WINDOWS 0x0500
 
 #include <iostream>
+#include <iomanip>
+#include <limits>
 #include <string>
 #include <cstring>
 #include <sstream>

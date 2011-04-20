@@ -3,7 +3,7 @@
 Facebook plugin for Miranda Instant Messenger
 _____________________________________________
 
-Copyright © 2009-11 Michal Zelinka
+Copyright ï¿½ 2009-11 Michal Zelinka
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -36,9 +36,9 @@ Last change on : $Date: 2011-01-08 11:10:34 +0100 (Sat, 08 Jan 2011) $
 #define C_LONG    C_INTEGER
 #define C_INTEGER64   0x0010
 #define C_LONGLONG    C_INTEGER64
-//#define C_FLOAT   0x0020
+#define C_FLOAT   0x0020
 #define C_DOUBLE  0x0040
-//#define C_LONGDOUBLE  0x0080
+#define C_LONGDOUBLE  0x0080
 #define C_TIME_T  0x0100
 
 template<typename T>
@@ -97,7 +97,7 @@ namespace utils
 	};
 
 	namespace conversion {
-		void from_string( const std::string& from, void* to, unsigned short flag );
+		template<typename T> T from_string(const std::string& s, unsigned short flag);
         std::string to_string( const void* data, unsigned short flag );
 	};
 
@@ -114,6 +114,42 @@ namespace utils
 		void* __fastcall allocate(size_t size);
 	};
 };
+
+template<typename T> T utils::conversion::from_string(const std::string& s, unsigned short flag)
+{
+	unsigned short type = flag & 0x0FFF;
+	std::ostringstream out(s);
+
+	switch ( type )
+	{
+
+	case C_BOOLEAN:
+		if ( s == "true" || s == "1" || s == "TRUE" ) return true;
+		return false;
+
+	case C_INTEGER:
+		if (FLAG_CONTAINS(flag,C_UNSIGNED)) return strtoul(s.c_str(),NULL,0);
+		return strtol(s.c_str(),NULL,0);
+
+	case C_TIME_T:
+	case C_INTEGER64:
+		if (FLAG_CONTAINS(flag,C_UNSIGNED)) return strtoull(s.c_str(),NULL,0);
+		return strtoll(s.c_str(),NULL,0);
+
+	case C_FLOAT:
+		return strtof(s.c_str(),NULL);
+
+	case C_DOUBLE:
+		return strtod(s.c_str(),NULL);
+
+	case C_LONGDOUBLE:
+		return strtold(s.c_str(),NULL);
+
+	default:
+		return NULL;
+
+	}
+}
 
 class ScopedLock
 {

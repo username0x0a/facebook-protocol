@@ -50,6 +50,13 @@ Last change on : $Date: 2011-01-08 11:10:34 +0100 (Sat, 08 Jan 2011) $
 #define LOG_FAILURE             3
 #define LOG_CRITICAL            4
 
+#define lltoa _i64toa
+#define atoll _atoi64
+#define strtoll _strtoi64
+#define strtoull _strtoui64
+#define strtof strtod
+#define strtold strtod
+
 #if defined( _UNICODE )
 #define NIIF_INTERN_TCHAR NIIF_INTERN_UNICODE // m_clist.h
 #define mir_tstrdup mir_wstrdup // m_system.h

@@ -165,9 +165,8 @@ void FacebookProto::ProcessFeeds( void* data )
 	std::vector< facebook_newsfeed* > news;
 
 	std::string::size_type pos = 0;
-	unsigned int count;
-	utils::conversion::from_string(
-	    utils::text::source_get_value( resp, 2, "storyCount\":", "," ), &count, C_UNSIGNED | C_INTEGER );
+	unsigned int count = utils::conversion::from_string<unsigned int>(
+	    utils::text::source_get_value( resp, 2, "storyCount\":", "," ), C_UNSIGNED | C_INTEGER );
 
 	while ( ( ( pos = resp->find( "\\u003ch6", pos ) ) != std::string::npos ) && ( count > 0 ) )
 	{
